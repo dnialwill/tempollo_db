@@ -7,6 +7,9 @@ CREATE TABLE IF NOT EXISTS public.organizations
   PRIMARY KEY (id)
 );
 
+CREATE UNIQUE INDEX IF NOT EXISTS organizations_code_unique
+  ON public.organizations (lower(code));
+
 ALTER TABLE public.organizations
   ADD CONSTRAINT organizations_code_check_length
 CHECK ((length(code) > 2) AND (length(code) < 7));

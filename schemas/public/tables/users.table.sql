@@ -11,13 +11,15 @@ CREATE TABLE IF NOT EXISTS public.users
   modified_by     TEXT,
   CONSTRAINT users_pkey
   PRIMARY KEY (id),
-  CONSTRAINT users_organization_id_username_unique
-  UNIQUE (organization_id, username),
-  CONSTRAINT users_organization_id_email_unique
-  UNIQUE (organization_id, email),
   CONSTRAINT users_organization_id_fkey
   FOREIGN KEY (organization_id) REFERENCES organizations
 );
+
+CREATE UNIQUE INDEX IF NOT EXISTS users_organization_id_username_unique
+  ON public.users (organization_id, lower(username));
+
+CREATE UNIQUE INDEX IF NOT EXISTS users_organization_id_email_unique
+  ON public.users (organization_id, lower(email));
 
 ALTER TABLE public.users
   ADD CONSTRAINT users_username_check_length
