@@ -27,3 +27,7 @@ ALTER TABLE public.users
   ADD CONSTRAINT users_email_check_length
 CHECK (length(email) < 255);
 
+ALTER TABLE public.users
+  ADD CONSTRAINT users_email_check_format
+CHECK (validate_email_format(email) = TRUE);
+
